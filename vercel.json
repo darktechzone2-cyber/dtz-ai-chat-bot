@@ -4,7 +4,6 @@
     "api/setup.py": { "maxDuration": 30 },
     "api/index.py": { "maxDuration": 30 }
   },
-  "rewrites": [{ "source": "/", "destination": "/api/index" }],
   "env": {
     "DB_PATH": "/tmp/bot.db",
     "HTTP_TIMEOUT": "55"
