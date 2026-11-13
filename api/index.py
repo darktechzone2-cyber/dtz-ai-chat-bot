@@ -28,18 +28,22 @@ import setup as setup_mod  # noqa: E402
 import webhook as webhook_mod  # noqa: E402
 
 
-def _status():
+def _api_online():
+    """True when the real DTZ AI API answers /api/health with online."""
     import urllib.request
 
     base = os.environ.get(
         "DTZ_API_BASE", "https://dark-tech-zone-ai.vercel.app"
     ).rstrip("/")
-    online = False
     try:
         with urllib.request.urlopen(base + "/api/health", timeout=10) as resp:
-            online = json.loads(resp.read().decode("utf-8")).get("status") == "online"
+            return json.loads(resp.read().decode("utf-8")).get("status") == "online"
     except Exception:
-        online = False
+        return False
+
+
+def _status():
+    online = _api_online()
     return {
         "ok": True,
         "service": "DTZ AI Chat Bot",
